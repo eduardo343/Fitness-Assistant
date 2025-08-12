@@ -1,0 +1,21 @@
+.main-header {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    color: #FF6B6B;
+    margin-bottom: 2rem;
+}
+.metric-card {
+    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+    padding: 1rem;
+    border-radius: 10px;
+    color: white;
+    margin: 0.5rem 0;
+}
+.exercise-card {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
