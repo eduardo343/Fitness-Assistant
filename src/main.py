@@ -14,30 +14,217 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS personalizado
+# CSS personalizado mejorado
 def create_custom_css():
     return """
     <style>
+    /* Importar fuentes modernas */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    
+    /* Variables CSS */
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --secondary-gradient: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+        --success-gradient: linear-gradient(135deg, #00b894, #55a3ff);
+        --warning-gradient: linear-gradient(135deg, #fdcb6e, #e17055);
+        --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.1);
+        --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.15);
+        --shadow-heavy: 0 12px 40px rgba(0, 0, 0, 0.2);
+        --border-radius: 15px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Estilos globales */
+    .stApp {
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Header principal mejorado */
     .main-header {
-        font-size: 3rem;
-        font-weight: bold;
+        font-size: 3.5rem;
+        font-weight: 700;
         text-align: center;
-        color: #FF6B6B;
+        background: var(--secondary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         margin-bottom: 2rem;
+        text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        letter-spacing: -1px;
     }
+    
+    /* Botones optimizados */
+    .stButton > button {
+        background: var(--primary-gradient) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: var(--border-radius) !important;
+        padding: 1rem 2rem !important;
+        font-weight: 600 !important;
+        font-size: 1.1rem !important;
+        transition: var(--transition) !important;
+        box-shadow: var(--shadow-light) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        font-family: 'Poppins', sans-serif !important;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: var(--shadow-heavy) !important;
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+    }
+    
+    .stButton > button:active {
+        transform: translateY(-1px) !important;
+    }
+    
+    /* Cards mejoradas */
     .metric-card {
-        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
-        padding: 1rem;
-        border-radius: 10px;
+        background: var(--primary-gradient);
+        padding: 2rem;
+        border-radius: var(--border-radius);
         color: white;
+        margin: 1rem 0;
+        box-shadow: var(--shadow-medium);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-heavy);
+    }
+    
+    .metric-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+        pointer-events: none;
+    }
+    
+    .exercise-card {
+        background: #ffffff;
+        border: 2px solid #f1f3f4;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        margin: 1rem 0;
+        box-shadow: var(--shadow-light);
+        transition: var(--transition);
+        position: relative;
+    }
+    
+    .exercise-card:hover {
+        transform: translateY(-3px);
+        border-color: #667eea;
+        box-shadow: var(--shadow-medium);
+    }
+    
+    /* Indicadores de progreso */
+    .progress-indicator {
+        background: var(--success-gradient);
+        height: 6px;
+        border-radius: 3px;
         margin: 0.5rem 0;
     }
-    .exercise-card {
-        background: #f8f9fa;
-        border: 1px solid #e9ecef;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
+    
+    /* Badges y etiquetas */
+    .difficulty-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .badge-beginner {
+        background: linear-gradient(45deg, #00b894, #55efc4);
+        color: white;
+    }
+    
+    .badge-intermediate {
+        background: linear-gradient(45deg, #fdcb6e, #e17055);
+        color: white;
+    }
+    
+    .badge-advanced {
+        background: linear-gradient(45deg, #d63031, #e84393);
+        color: white;
+    }
+    
+    /* Animaciones */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+    }
+    
+    .animate-fade-in {
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    .animate-pulse {
+        animation: pulse 2s infinite;
+    }
+    
+    /* Mejoras de sidebar */
+    .css-1d391kg {
+        background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+    
+    /* Responsive design mejorado */
+    @media (max-width: 768px) {
+        .main-header {
+            font-size: 2.5rem;
+        }
+        
+        .stButton > button {
+            font-size: 1rem !important;
+            padding: 0.8rem 1.5rem !important;
+        }
+        
+        .metric-card, .exercise-card {
+            padding: 1.5rem;
+        }
+    }
+    
+    /* Scrollbar personalizada */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #f1f3f4;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-gradient);
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary-gradient);
     }
     </style>
     """
@@ -419,6 +606,558 @@ class CardioPlanner:
             db.add_progress(cardio_session)
             st.success("Sesión de cardio registrada!")
 
+# Anatomía muscular y ejercicios específicos
+class MuscleAnatomy:
+    def __init__(self):
+        self.muscle_groups = {
+            "biceps": {
+                "name": "💪 Bíceps",
+                "description": "Músculos flexores del brazo",
+                "emoji": "💪",
+                "color": "#e74c3c",
+                "exercises": [
+                    {
+                        "name": "Curl con Mancuernas",
+                        "sets": "4x8-12",
+                        "difficulty": "Principiante",
+                        "equipment": "Mancuernas",
+                        "description": "Ejercicio clásico para el desarrollo del bíceps braquial",
+                        "tips": "Mantén los codos fijos, controla la fase excéntrica",
+                        "muscles": "Bíceps braquial, braquial anterior"
+                    },
+                    {
+                        "name": "Curl Martillo",
+                        "sets": "3x10-15",
+                        "difficulty": "Principiante",
+                        "equipment": "Mancuernas",
+                        "description": "Fortalece bíceps y antebrazos con agarre neutro",
+                        "tips": "Agarre neutro, movimiento controlado",
+                        "muscles": "Bíceps, braquioradial, braquial anterior"
+                    },
+                    {
+                        "name": "Curl en Barra",
+                        "sets": "4x6-10",
+                        "difficulty": "Intermedio",
+                        "equipment": "Barra",
+                        "description": "Permite mayor carga para desarrollo de fuerza",
+                        "tips": "Postura estable, evita balanceo",
+                        "muscles": "Bíceps braquial, músculos auxiliares"
+                    },
+                    {
+                        "name": "Curl Concentrado",
+                        "sets": "3x8-12",
+                        "difficulty": "Intermedio",
+                        "equipment": "Mancuerna",
+                        "description": "Aislamiento puro del bíceps",
+                        "tips": "Apoyo completo del brazo, contracción máxima",
+                        "muscles": "Bíceps braquial (aislado)"
+                    },
+                    {
+                        "name": "Curl 21s",
+                        "sets": "3x21",
+                        "difficulty": "Avanzado",
+                        "equipment": "Mancuernas/Barra",
+                        "description": "Técnica avanzada: 7 reps parciales + 7 parciales + 7 completas",
+                        "tips": "7 reps mitad inferior + 7 mitad superior + 7 completas",
+                        "muscles": "Bíceps braquial, resistencia muscular"
+                    }
+                ]
+            },
+            "triceps": {
+                "name": "💥 Tríceps",
+                "description": "Músculos extensores del brazo",
+                "emoji": "💥",
+                "color": "#9b59b6",
+                "exercises": [
+                    {
+                        "name": "Extensiones Tumbado (Skull Crushers)",
+                        "sets": "4x8-12",
+                        "difficulty": "Principiante",
+                        "equipment": "Barra/Mancuernas",
+                        "description": "Aislamiento efectivo de tríceps",
+                        "tips": "Codos fijos, movimiento solo de antebrazos",
+                        "muscles": "Tríceps braquial (3 cabezas)"
+                    },
+                    {
+                        "name": "Press Francés",
+                        "sets": "3x10-15",
+                        "difficulty": "Principiante",
+                        "equipment": "Mancuernas",
+                        "description": "Desarrollo de la cabeza larga del tríceps",
+                        "tips": "Brazos verticales, rango completo de movimiento",
+                        "muscles": "Tríceps braquial, énfasis en cabeza larga"
+                    },
+                    {
+                        "name": "Fondos en Paralelas",
+                        "sets": "4x6-12",
+                        "difficulty": "Intermedio",
+                        "equipment": "Paralelas",
+                        "description": "Ejercicio compuesto para tríceps y pecho",
+                        "tips": "Torso ligeramente inclinado, descenso controlado",
+                        "muscles": "Tríceps, pectoral inferior, deltoides anterior"
+                    },
+                    {
+                        "name": "Press de Banca Agarre Cerrado",
+                        "sets": "4x6-10",
+                        "difficulty": "Intermedio",
+                        "equipment": "Barra",
+                        "description": "Desarrollo de fuerza funcional de tríceps",
+                        "tips": "Agarre separación de hombros, codos cerca del cuerpo",
+                        "muscles": "Tríceps, pectoral interior, deltoides anterior"
+                    },
+                    {
+                        "name": "Diamond Push-ups",
+                        "sets": "3x5-15",
+                        "difficulty": "Avanzado",
+                        "equipment": "Peso corporal",
+                        "description": "Variación avanzada de flexiones para tríceps",
+                        "tips": "Manos forman diamante, codos cerca del cuerpo",
+                        "muscles": "Tríceps braquial, core, pectoral"
+                    }
+                ]
+            },
+            "chest": {
+                "name": "🏋️‍♂️ Pecho",
+                "description": "Músculos pectorales",
+                "emoji": "🏋️‍♂️",
+                "color": "#3498db",
+                "exercises": [
+                    {
+                        "name": "Press de Banca Plano",
+                        "sets": "4x6-10",
+                        "difficulty": "Principiante",
+                        "equipment": "Barra/Mancuernas",
+                        "description": "Rey de ejercicios para desarrollo de pecho",
+                        "tips": "Retracción escapular, pies firmes en el suelo",
+                        "muscles": "Pectoral mayor, deltoides anterior, tríceps"
+                    },
+                    {
+                        "name": "Press Inclinado",
+                        "sets": "4x8-12",
+                        "difficulty": "Principiante",
+                        "equipment": "Barra/Mancuernas",
+                        "description": "Desarrollo del pectoral superior",
+                        "tips": "Inclinación 30-45°, trayectoria hacia el mentón",
+                        "muscles": "Pectoral superior, deltoides anterior"
+                    },
+                    {
+                        "name": "Aperturas con Mancuernas",
+                        "sets": "3x10-15",
+                        "difficulty": "Intermedio",
+                        "equipment": "Mancuernas",
+                        "description": "Aislamiento y estiramiento del pectoral",
+                        "tips": "Codos ligeramente flexionados, arco amplio",
+                        "muscles": "Pectoral mayor (aislado)"
+                    },
+                    {
+                        "name": "Flexiones Tradicionales",
+                        "sets": "4x8-20",
+                        "difficulty": "Principiante",
+                        "equipment": "Peso corporal",
+                        "description": "Ejercicio funcional básico",
+                        "tips": "Cuerpo rígido, manos separación de hombros",
+                        "muscles": "Pectoral, tríceps, core, deltoides"
+                    },
+                    {
+                        "name": "Fondos en Paralelas (Pecho)",
+                        "sets": "3x6-12",
+                        "difficulty": "Avanzado",
+                        "equipment": "Paralelas",
+                        "description": "Inclinación hacia adelante para énfasis en pecho",
+                        "tips": "Torso inclinado 45°, descenso profundo",
+                        "muscles": "Pectoral inferior, tríceps, deltoides"
+                    }
+                ]
+            },
+            "back": {
+                "name": "🦅 Espalda",
+                "description": "Músculos dorsales y romboides",
+                "emoji": "🦅",
+                "color": "#27ae60",
+                "exercises": [
+                    {
+                        "name": "Dominadas/Pull-ups",
+                        "sets": "4x5-12",
+                        "difficulty": "Intermedio",
+                        "equipment": "Barra fija",
+                        "description": "Mejor ejercicio para desarrollo de espalda",
+                        "tips": "Retracción escapular, pecho hacia la barra",
+                        "muscles": "Dorsales, romboides, bíceps, core"
+                    },
+                    {
+                        "name": "Remo con Barra",
+                        "sets": "4x6-10",
+                        "difficulty": "Principiante",
+                        "equipment": "Barra",
+                        "description": "Desarrollo de grosor de espalda",
+                        "tips": "Torso inclinado 45°, barra hacia abdomen bajo",
+                        "muscles": "Dorsales, romboides, trapecio medio"
+                    },
+                    {
+                        "name": "Remo con Mancuernas",
+                        "sets": "4x8-12",
+                        "difficulty": "Principiante",
+                        "equipment": "Mancuerna",
+                        "description": "Trabajo unilateral para corrección de desequilibrios",
+                        "tips": "Apoyo en banco, codo cerca del cuerpo",
+                        "muscles": "Dorsal ancho, romboides, trapecio"
+                    },
+                    {
+                        "name": "Jalones al Pecho",
+                        "sets": "4x8-15",
+                        "difficulty": "Principiante",
+                        "equipment": "Máquina de poleas",
+                        "description": "Alternativa a dominadas para principiantes",
+                        "tips": "Torso recto, barra hacia pecho superior",
+                        "muscles": "Dorsales, bíceps, romboides"
+                    },
+                    {
+                        "name": "Peso Muerto",
+                        "sets": "4x5-8",
+                        "difficulty": "Avanzado",
+                        "equipment": "Barra",
+                        "description": "Ejercicio compuesto para toda la cadena posterior",
+                        "tips": "Espalda neutra, cadera hacia atrás",
+                        "muscles": "Erector espinal, glúteos, isquiotibiales, trapecios"
+                    }
+                ]
+            },
+            "shoulders": {
+                "name": "🤸‍♀️ Hombros",
+                "description": "Músculos deltoides",
+                "emoji": "🤸‍♀️",
+                "color": "#f39c12",
+                "exercises": [
+                    {
+                        "name": "Press Militar",
+                        "sets": "4x6-10",
+                        "difficulty": "Intermedio",
+                        "equipment": "Barra",
+                        "description": "Desarrollo integral de hombros",
+                        "tips": "Core activado, trayectoria recta",
+                        "muscles": "Deltoides, tríceps, core"
+                    },
+                    {
+                        "name": "Elevaciones Laterales",
+                        "sets": "4x10-15",
+                        "difficulty": "Principiante",
+                        "equipment": "Mancuernas",
+                        "description": "Aislamiento del deltoides medio",
+                        "tips": "Codos ligeramente flexionados, control en bajada",
+                        "muscles": "Deltoides medio (aislado)"
+                    },
+                    {
+                        "name": "Elevaciones Frontales",
+                        "sets": "3x10-15",
+                        "difficulty": "Principiante",
+                        "equipment": "Mancuernas/Disco",
+                        "description": "Trabajo del deltoides anterior",
+                        "tips": "Movimiento controlado, hasta altura de hombros",
+                        "muscles": "Deltoides anterior"
+                    },
+                    {
+                        "name": "Pájaros (Deltoides Posterior)",
+                        "sets": "4x12-20",
+                        "difficulty": "Principiante",
+                        "equipment": "Mancuernas",
+                        "description": "Fortalecimiento del deltoides posterior",
+                        "tips": "Torso inclinado, pellizcar omóplatos",
+                        "muscles": "Deltoides posterior, romboides"
+                    },
+                    {
+                        "name": "Pike Push-ups",
+                        "sets": "3x8-15",
+                        "difficulty": "Avanzado",
+                        "equipment": "Peso corporal",
+                        "description": "Progresión hacia handstand push-ups",
+                        "tips": "Posición de V invertida, cabeza hacia el suelo",
+                        "muscles": "Deltoides, tríceps, core"
+                    }
+                ]
+            },
+            "legs": {
+                "name": "🦵 Piernas",
+                "description": "Cuádriceps, isquiotibiales y glúteos",
+                "emoji": "🦵",
+                "color": "#e67e22",
+                "exercises": [
+                    {
+                        "name": "Sentadillas",
+                        "sets": "4x8-15",
+                        "difficulty": "Principiante",
+                        "equipment": "Peso corporal/Barra",
+                        "description": "Rey de ejercicios para piernas",
+                        "tips": "Cadera hacia atrás, rodillas alineadas",
+                        "muscles": "Cuádriceps, glúteos, core"
+                    },
+                    {
+                        "name": "Peso Muerto Rumano",
+                        "sets": "4x8-12",
+                        "difficulty": "Intermedio",
+                        "equipment": "Barra/Mancuernas",
+                        "description": "Desarrollo de isquiotibiales y glúteos",
+                        "tips": "Cadera hacia atrás, espalda recta",
+                        "muscles": "Isquiotibiales, glúteos, erector espinal"
+                    },
+                    {
+                        "name": "Zancadas/Lunges",
+                        "sets": "3x10-15 c/pierna",
+                        "difficulty": "Principiante",
+                        "equipment": "Peso corporal/Mancuernas",
+                        "description": "Trabajo unilateral y funcional",
+                        "tips": "Paso largo, rodilla trasera casi toca el suelo",
+                        "muscles": "Cuádriceps, glúteos, equilibrio"
+                    },
+                    {
+                        "name": "Hip Thrust",
+                        "sets": "4x10-20",
+                        "difficulty": "Principiante",
+                        "equipment": "Banco/Barra",
+                        "description": "Mejor ejercicio para desarrollo de glúteos",
+                        "tips": "Contracción máxima arriba, barbilla al pecho",
+                        "muscles": "Glúteo mayor, isquiotibiales"
+                    },
+                    {
+                        "name": "Pistol Squats",
+                        "sets": "3x3-8 c/pierna",
+                        "difficulty": "Avanzado",
+                        "equipment": "Peso corporal",
+                        "description": "Sentadilla unilateral avanzada",
+                        "tips": "Flexibilidad de tobillo, fuerza unilateral",
+                        "muscles": "Cuádriceps, glúteos, core, equilibrio"
+                    }
+                ]
+            },
+            "abs": {
+                "name": "🔥 Abdominales",
+                "description": "Músculos del core",
+                "emoji": "🔥",
+                "color": "#e74c3c",
+                "exercises": [
+                    {
+                        "name": "Plancha",
+                        "sets": "4x30-60s",
+                        "difficulty": "Principiante",
+                        "equipment": "Peso corporal",
+                        "description": "Isométrico fundamental para core",
+                        "tips": "Cuerpo rígido como tabla, respiración continua",
+                        "muscles": "Recto abdominal, transverso, oblicuos"
+                    },
+                    {
+                        "name": "Crunch Abdominal",
+                        "sets": "4x15-25",
+                        "difficulty": "Principiante",
+                        "equipment": "Peso corporal",
+                        "description": "Flexión de tronco básica",
+                        "tips": "Movimiento corto, contracción en la subida",
+                        "muscles": "Recto abdominal superior"
+                    },
+                    {
+                        "name": "Mountain Climbers",
+                        "sets": "4x20-40",
+                        "difficulty": "Intermedio",
+                        "equipment": "Peso corporal",
+                        "description": "Ejercicio dinámico de core y cardio",
+                        "tips": "Posición de plancha, alternar piernas rápido",
+                        "muscles": "Core completo, cardio"
+                    },
+                    {
+                        "name": "Russian Twists",
+                        "sets": "4x20-40",
+                        "difficulty": "Intermedio",
+                        "equipment": "Peso corporal/Disco",
+                        "description": "Rotación de core para oblicuos",
+                        "tips": "Torso inclinado, pies elevados",
+                        "muscles": "Oblicuos, recto abdominal"
+                    },
+                    {
+                        "name": "L-Sit",
+                        "sets": "4x10-30s",
+                        "difficulty": "Avanzado",
+                        "equipment": "Paralelas/Suelo",
+                        "description": "Isométrico avanzado de core",
+                        "tips": "Piernas extendidas paralelas al suelo",
+                        "muscles": "Core completo, flexores de cadera"
+                    }
+                ]
+            }
+        }
+    
+    def render(self):
+        st.subheader("🏃‍♀️ Anatomía Muscular & Ejercicios")
+        
+        # Información introductoria
+        st.markdown("""
+        **Explora ejercicios específicos por grupo muscular**  
+        Cada sección incluye ejercicios categorizados por nivel de dificultad con información científica detallada.
+        """)
+        
+        # Layout en grid para los grupos musculares
+        muscle_names = list(self.muscle_groups.keys())
+        
+        # Organizar en filas de 2 columnas
+        for i in range(0, len(muscle_names), 2):
+            col1, col2 = st.columns(2)
+            
+            # Primera columna
+            if i < len(muscle_names):
+                muscle_key = muscle_names[i]
+                muscle = self.muscle_groups[muscle_key]
+                
+                with col1:
+                    # Crear card clickeable para cada músculo
+                    container = st.container()
+                    with container:
+                        # Usar HTML personalizado para mejor design
+                        st.markdown(f"""
+                        <div class="muscle-card" style="background: linear-gradient(135deg, {muscle['color']}22, {muscle['color']}44);">
+                            <h3>{muscle['emoji']} {muscle['name']}</h3>
+                            <p>{muscle['description']}</p>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        
+                        # Botón para mostrar ejercicios
+                        if st.button(f"Ver Ejercicios {muscle['emoji']}", 
+                                   key=f"btn_{muscle_key}",
+                                   use_container_width=True):
+                            self.show_muscle_exercises(muscle_key)
+            
+            # Segunda columna
+            if i + 1 < len(muscle_names):
+                muscle_key = muscle_names[i + 1]
+                muscle = self.muscle_groups[muscle_key]
+                
+                with col2:
+                    container = st.container()
+                    with container:
+                        st.markdown(f"""
+                        <div class="muscle-card" style="background: linear-gradient(135deg, {muscle['color']}22, {muscle['color']}44);">
+                            <h3>{muscle['emoji']} {muscle['name']}</h3>
+                            <p>{muscle['description']}</p>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        
+                        if st.button(f"Ver Ejercicios {muscle['emoji']}", 
+                                   key=f"btn_{muscle_key}",
+                                   use_container_width=True):
+                            self.show_muscle_exercises(muscle_key)
+    
+    def show_muscle_exercises(self, muscle_key):
+        """Muestra los ejercicios de un grupo muscular específico"""
+        muscle = self.muscle_groups[muscle_key]
+        
+        st.markdown(f"## {muscle['emoji']} Ejercicios para {muscle['name']}")
+        st.markdown(f"**{muscle['description']}**")
+        
+        # Filtros
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            difficulty_filter = st.selectbox(
+                "Filtrar por nivel:",
+                ["Todos", "Principiante", "Intermedio", "Avanzado"],
+                key=f"diff_filter_{muscle_key}"
+            )
+        
+        with col2:
+            equipment_list = list(set([ex["equipment"] for ex in muscle["exercises"]]))
+            equipment_filter = st.selectbox(
+                "Filtrar por equipamiento:",
+                ["Todos"] + equipment_list,
+                key=f"equip_filter_{muscle_key}"
+            )
+        
+        with col3:
+            show_tips = st.checkbox("Mostrar tips avanzados", key=f"tips_{muscle_key}")
+        
+        # Filtrar ejercicios
+        filtered_exercises = muscle["exercises"]
+        
+        if difficulty_filter != "Todos":
+            filtered_exercises = [ex for ex in filtered_exercises if ex["difficulty"] == difficulty_filter]
+        
+        if equipment_filter != "Todos":
+            filtered_exercises = [ex for ex in filtered_exercises if ex["equipment"] == equipment_filter]
+        
+        st.markdown(f"**{len(filtered_exercises)} ejercicios encontrados**")
+        st.markdown("---")
+        
+        # Mostrar ejercicios filtrados
+        for i, exercise in enumerate(filtered_exercises, 1):
+            # Card para cada ejercicio
+            with st.container():
+                # Header del ejercicio
+                col1, col2, col3 = st.columns([2, 1, 1])
+                
+                with col1:
+                    st.markdown(f"### {i}. {exercise['name']}")
+                
+                with col2:
+                    # Badge de dificultad
+                    difficulty_colors = {
+                        "Principiante": "🟢",
+                        "Intermedio": "🟡", 
+                        "Avanzado": "🔴"
+                    }
+                    st.markdown(f"**{difficulty_colors[exercise['difficulty']]} {exercise['difficulty']}**")
+                
+                with col3:
+                    st.markdown(f"**🏋️ {exercise['sets']}**")
+                
+                # Información del ejercicio
+                col1, col2 = st.columns([2, 1])
+                
+                with col1:
+                    st.write(f"📝 **Descripción:** {exercise['description']}")
+                    st.write(f"🎯 **Músculos:** {exercise['muscles']}")
+                    
+                    if show_tips:
+                        st.write(f"💡 **Tips:** {exercise['tips']}")
+                
+                with col2:
+                    st.write(f"⚙️ **Equipamiento:** {exercise['equipment']}")
+                    
+                    # Botón para añadir a rutina personalizada
+                    if st.button(f"➕ Añadir a mi rutina", key=f"add_{muscle_key}_{i}"):
+                        self.add_to_custom_routine(exercise, muscle_key)
+                
+                st.markdown("---")
+        
+        # Recomendaciones específicas del grupo muscular
+        st.markdown(f"### 🧬 Recomendaciones para {muscle['name']}")
+        
+        muscle_recommendations = {
+            "biceps": "• **Frecuencia**: 2-3x/semana • **Descanso**: 48-72h • **Rango**: ROM completo crítico • **Tempo**: 2-1-2-1",
+            "triceps": "• **Volumen**: Mayor que bíceps (3:2 ratio) • **Variedad**: Diferentes ángulos • **Progresión**: Sobrecarga gradual",
+            "chest": "• **Calentamiento**: Rotaciones de hombro • **Frecuencia**: 2x/semana • **Progresión**: Inclinado antes que plano",
+            "back": "• **Activación**: Pre-activar con band pull-aparts • **Forma**: Retracción escapular • **Balance**: 2:1 tracción/empuje",
+            "shoulders": "• **Movilidad**: Calentamiento extenso • **Prevención**: Fortalece rotadores externos • **Volumen**: Moderado",
+            "legs": "• **Frecuencia**: 2-3x/semana • **Compound**: Priorizar multiarticulares • **Unilateral**: Incluir trabajo 1 pierna",
+            "abs": "• **Respiración**: Exhalar en contracción • **Progresión**: Tiempo > Repeticiones • **Funcional**: Anti-extensión y rotación"
+        }
+        
+        st.info(muscle_recommendations.get(muscle_key, "Consulta con un profesional para recomendaciones específicas."))
+        
+        # Botón para volver
+        if st.button("⬅️ Volver a Anatomía Muscular", key=f"back_{muscle_key}"):
+            st.rerun()
+    
+    def add_to_custom_routine(self, exercise, muscle_group):
+        """Añade un ejercicio a una rutina personalizada"""
+        db = DatabaseManager()
+        
+        custom_workout = {
+            "date": datetime.now().isoformat(),
+            "type": "custom",
+            "muscle_group": muscle_group,
+            "exercise": exercise,
+            "custom_routine": True
+        }
+        
+        db.add_workout(custom_workout)
+        st.success(f"✅ '{exercise['name']}' añadido a tu rutina personalizada!")
+        st.balloons()
+
 # Recursos científicos
 class ScientificResources:
     def render(self):
@@ -507,6 +1246,7 @@ def main():
         "Dashboard",
         "Calculadora IMC", 
         "Generador de Rutinas",
+        "Anatomía Muscular",
         "Planificador de Cardio",
         "Seguimiento de Progreso",
         "Recursos Científicos"
@@ -545,6 +1285,13 @@ def main():
             if st.button("📊 Ver Progreso", key="nav_progreso", use_container_width=True):
                 st.session_state.current_page = "Seguimiento de Progreso"
                 st.rerun()
+        
+        # Nueva fila con botón destacado de Anatomía Muscular
+        st.markdown("### 🔥 ¡Nueva Funcionalidad!")
+        
+        if st.button("🏃‍♀️ Explorar Anatomía Muscular - ¡NUEVO!", key="nav_anatomy", use_container_width=True):
+            st.session_state.current_page = "Anatomía Muscular"
+            st.rerun()
         
         # Mostrar información adicional en el dashboard
         st.markdown("---")
@@ -600,6 +1347,9 @@ def main():
     
     elif current_page == "Generador de Rutinas":
         RoutineGenerator().render()
+    
+    elif current_page == "Anatomía Muscular":
+        MuscleAnatomy().render()
     
     elif current_page == "Planificador de Cardio":
         CardioPlanner().render()

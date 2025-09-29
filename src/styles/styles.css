@@ -1,21 +1,172 @@
+/* Estilos principales mejorados */
 .main-header {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: bold;
     text-align: center;
-    color: #FF6B6B;
+    background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
+
+/* Botones principales optimizados */
+.stButton > button {
+    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6) !important;
+    background: linear-gradient(45deg, #764ba2 0%, #667eea 100%) !important;
+}
+
+.stButton > button:active {
+    transform: translateY(0px) !important;
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4) !important;
+}
+
+/* Botones de navegación especiales */
+.nav-button-primary {
+    background: linear-gradient(45deg, #FF6B6B, #4ECDC4) !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4) !important;
+}
+
+.nav-button-primary:hover {
+    background: linear-gradient(45deg, #4ECDC4, #FF6B6B) !important;
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6) !important;
+}
+
+.nav-button-secondary {
+    background: linear-gradient(45deg, #74b9ff, #0984e3) !important;
+    box-shadow: 0 4px 15px rgba(116, 185, 255, 0.4) !important;
+}
+
+.nav-button-secondary:hover {
+    background: linear-gradient(45deg, #0984e3, #74b9ff) !important;
+    box-shadow: 0 8px 25px rgba(116, 185, 255, 0.6) !important;
+}
+
+/* Cards mejoradas */
 .metric-card {
-    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
-    padding: 1rem;
-    border-radius: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1.5rem;
+    border-radius: 15px;
     color: white;
-    margin: 0.5rem 0;
+    margin: 0.75rem 0;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+}
+
 .exercise-card {
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 1rem;
-    margin: 0.5rem 0;
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.exercise-card:hover {
+    transform: translateY(-3px);
+    border-color: #667eea;
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
+}
+
+/* Anatomía muscular - Cards especiales */
+.muscle-card {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 1rem 0;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 6px 25px rgba(252, 182, 159, 0.3);
+    text-align: center;
+}
+
+.muscle-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(252, 182, 159, 0.5);
+    border-color: #ff7675;
+}
+
+.muscle-card h3 {
+    color: #2d3436;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.muscle-card p {
+    color: #636e72;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Contenedores responsivos */
+@media (max-width: 768px) {
+    .main-header {
+        font-size: 2.5rem;
+    }
+    
+    .stButton > button {
+        font-size: 1rem !important;
+        padding: 0.6rem 1.2rem !important;
+    }
+    
+    .muscle-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Animaciones */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+/* Efectos de carga */
+.loading-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, transparent 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
 }
