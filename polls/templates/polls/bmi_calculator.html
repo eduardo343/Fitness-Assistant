@@ -1,0 +1,72 @@
+{% extends "polls/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "BMI calculator" %}{% endblock %}
+
+{% block content %}
+<div class="hero card">
+    <p><a href="{% url 'polls:index' %}">{% trans "Back to recommendations" %}</a></p>
+    <h1>{% trans "BMI calculator" %}</h1>
+    <p class="muted">
+        {% trans "Formula: BMI = weight(kg) / height(m)^2." %}
+    </p>
+    <form method="get">
+        <div class="grid">
+            <div class="field">
+                {{ form.weight_kg.label_tag }}
+                {{ form.weight_kg }}
+            </div>
+            <div class="field">
+                {{ form.height_cm.label_tag }}
+                {{ form.height_cm }}
+            </div>
+            <div class="field">
+                {{ form.place.label_tag }}
+                {{ form.place }}
+            </div>
+        </div>
+        <p style="margin-top: 14px; margin-bottom: 0;">
+            <button class="btn" type="submit">{% trans "Calculate BMI" %}</button>
+        </p>
+    </form>
+</div>
+
+{% if result %}
+    <section class="card" style="margin-bottom: 16px;">
+        <h2>{% trans "Result" %}</h2>
+        <p><strong>{% trans "BMI" %}:</strong> {{ result.bmi }}</p>
+        <p><strong>{% trans "Category" %}:</strong> {{ result.category }}</p>
+        <p>
+            <strong>{% trans "Estimated healthy range for your height" %}:</strong>
+            {{ result.healthy_weight_min }} kg - {{ result.healthy_weight_max }} kg
+        </p>
+        <p>
+            <strong>{% trans "Suggested goal" %}:</strong> {{ result.recommended_goal_label }}
+        </p>
+    </section>
+{% elif has_filters %}
+    <section class="card" style="margin-bottom: 16px;">
+        <h2>{% trans "Invalid data" %}</h2>
+        <p class="muted">{% trans "Review weight and height values. They must be valid numbers in the allowed range." %}</p>
+    </section>
+{% endif %}
+
+{% if recommended_exercises %}
+    <h2>{% trans "Suggested exercises based on your BMI" %}</h2>
+    <div class="grid">
+        {% for exercise in recommended_exercises %}
+            <article class="card">
+                <h3>
+                    <a href="{% url 'polls:exercise_detail' exercise.id %}">
+                        {{ exercise.name }}
+                    </a>
+                </h3>
+                <p class="muted">{{ exercise.description|truncatechars:130 }}</p>
+                <p><span class="pill">{{ exercise.get_place_display }}</span></p>
+                <p><span class="pill">{{ exercise.get_goal_display }}</span></p>
+                <p><span class="pill">{{ exercise.get_level_display }}</span></p>
+            </article>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,279 @@
+# Spanish translations for this project.
+msgid ""
+msgstr ""
+"Project-Id-Version: fitness-assistant\n"
+"POT-Creation-Date: 2026-03-09 21:29+0000\n"
+"PO-Revision-Date: 2026-03-09 21:35+0000\n"
+"Last-Translator: Alan\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: mysite/settings.py:112
+msgid "English"
+msgstr "Ingles"
+
+#: mysite/settings.py:113
+msgid "Spanish"
+msgstr "Espanol"
+
+#: polls/forms.py:9
+msgid "Any place"
+msgstr "Cualquier lugar"
+
+#: polls/forms.py:10 polls/models.py:7
+msgid "Home"
+msgstr "Casa"
+
+#: polls/forms.py:11 polls/models.py:8
+msgid "Gym"
+msgstr "Gym"
+
+#: polls/forms.py:14
+msgid "Place"
+msgstr "Lugar"
+
+#: polls/forms.py:16
+msgid "Any goal"
+msgstr "Cualquier objetivo"
+
+#: polls/forms.py:18
+msgid "Goal"
+msgstr "Objetivo"
+
+#: polls/forms.py:21
+msgid "Any level"
+msgstr "Cualquier nivel"
+
+#: polls/forms.py:23
+msgid "Level"
+msgstr "Nivel"
+
+#: polls/forms.py:29
+msgid "Max duration (min)"
+msgstr "Duracion maxima (min)"
+
+#: polls/forms.py:33
+msgid "Bodyweight only"
+msgstr "Solo peso corporal"
+
+#: polls/forms.py:41
+msgid "Weight (kg)"
+msgstr "Peso (kg)"
+
+#: polls/forms.py:46
+msgid "Height (cm)"
+msgstr "Altura (cm)"
+
+#: polls/forms.py:51
+msgid "Training place"
+msgstr "Lugar para entrenar"
+
+#: polls/models.py:9
+msgid "Home and gym"
+msgstr "Casa y gym"
+
+#: polls/models.py:12
+msgid "Lose fat"
+msgstr "Perder grasa"
+
+#: polls/models.py:13
+msgid "Build muscle"
+msgstr "Ganar musculo"
+
+#: polls/models.py:14
+msgid "Strength"
+msgstr "Fuerza"
+
+#: polls/models.py:15
+msgid "Endurance"
+msgstr "Resistencia"
+
+#: polls/models.py:16
+msgid "Mobility"
+msgstr "Movilidad"
+
+#: polls/models.py:19
+msgid "Beginner"
+msgstr "Principiante"
+
+#: polls/models.py:20
+msgid "Intermediate"
+msgstr "Intermedio"
+
+#: polls/models.py:21
+msgid "Advanced"
+msgstr "Avanzado"
+
+#: polls/templates/polls/base.html:116
+msgid "Language"
+msgstr "Idioma"
+
+#: polls/templates/polls/bmi_calculator.html:4
+#: polls/templates/polls/bmi_calculator.html:9
+msgid "BMI calculator"
+msgstr "Calculadora IMC"
+
+#: polls/templates/polls/bmi_calculator.html:8
+msgid "Back to recommendations"
+msgstr "Volver a recomendaciones"
+
+#: polls/templates/polls/bmi_calculator.html:11
+msgid "Formula: BMI = weight(kg) / height(m)^2."
+msgstr "Formula: IMC = peso(kg) / altura(m)^2."
+
+#: polls/templates/polls/bmi_calculator.html:29
+msgid "Calculate BMI"
+msgstr "Calcular IMC"
+
+#: polls/templates/polls/bmi_calculator.html:36
+msgid "Result"
+msgstr "Resultado"
+
+#: polls/templates/polls/bmi_calculator.html:37
+msgid "BMI"
+msgstr "IMC"
+
+#: polls/templates/polls/bmi_calculator.html:38
+msgid "Category"
+msgstr "Categoria"
+
+#: polls/templates/polls/bmi_calculator.html:40
+msgid "Estimated healthy range for your height"
+msgstr "Rango saludable estimado para tu altura"
+
+#: polls/templates/polls/bmi_calculator.html:44
+msgid "Suggested goal"
+msgstr "Objetivo sugerido"
+
+#: polls/templates/polls/bmi_calculator.html:49
+msgid "Invalid data"
+msgstr "Datos invalidos"
+
+#: polls/templates/polls/bmi_calculator.html:50
+msgid ""
+"Review weight and height values. They must be valid numbers in the allowed "
+"range."
+msgstr ""
+"Revisa peso y altura. Deben ser valores validos dentro del rango permitido."
+
+#: polls/templates/polls/bmi_calculator.html:55
+msgid "Suggested exercises based on your BMI"
+msgstr "Ejercicios sugeridos segun tu IMC"
+
+#: polls/templates/polls/exercise_detail.html:8
+msgid "Back to recommender"
+msgstr "Volver al recomendador"
+
+#: polls/templates/polls/exercise_detail.html:14
+#: polls/templates/polls/index.html:59
+msgid "Focus"
+msgstr "Enfoque"
+
+#: polls/templates/polls/exercise_detail.html:15
+msgid "Estimated duration"
+msgstr "Duracion estimada"
+
+#: polls/templates/polls/exercise_detail.html:15
+msgid "minutes"
+msgstr "minutos"
+
+#: polls/templates/polls/exercise_detail.html:18
+msgid "Suggested equipment"
+msgstr "Equipo sugerido"
+
+#: polls/templates/polls/exercise_detail.html:19
+msgid "Basic training equipment"
+msgstr "Equipo basico de entrenamiento"
+
+#: polls/templates/polls/exercise_detail.html:22
+#: polls/templates/polls/index.html:62
+msgid "Equipment"
+msgstr "Equipo"
+
+#: polls/templates/polls/exercise_detail.html:22
+msgid "No equipment needed."
+msgstr "No requiere equipo."
+
+#: polls/templates/polls/index.html:4 polls/templates/polls/index.html:8
+msgid "Exercise recommender"
+msgstr "Recomendador de ejercicios"
+
+#: polls/templates/polls/index.html:10
+msgid ""
+"Filter routines for home or gym based on your goal, level, and available "
+"time."
+msgstr ""
+"Filtra rutinas para entrenar en casa o en gym segun tu objetivo, nivel y "
+"tiempo disponible."
+
+#: polls/templates/polls/index.html:12
+msgid "Go to BMI calculator"
+msgstr "Ir a calculadora IMC"
+
+#: polls/templates/polls/index.html:37
+msgid "Search recommendations"
+msgstr "Buscar recomendaciones"
+
+#: polls/templates/polls/index.html:43
+msgid "Suggested exercises"
+msgstr "Ejercicios sugeridos"
+
+#: polls/templates/polls/index.html:58
+msgid "Duration"
+msgstr "Duracion"
+
+#: polls/templates/polls/index.html:63
+msgid "Required"
+msgstr "Requerido"
+
+#: polls/templates/polls/index.html:66
+msgid "No equipment needed"
+msgstr "Sin equipo"
+
+#: polls/templates/polls/index.html:73
+msgid "No results"
+msgstr "Sin resultados"
+
+#: polls/templates/polls/index.html:75
+msgid ""
+"No exercises were found with those filters. Try adjusting level, goal, or "
+"max duration."
+msgstr ""
+"No encontramos ejercicios con esos filtros. Ajusta nivel, objetivo o "
+"duracion maxima."
+
+#: polls/templates/polls/index.html:80
+msgid "Start with a filter"
+msgstr "Empieza con un filtro"
+
+#: polls/templates/polls/index.html:81
+msgid "Select your preferences and we will show personalized recommendations."
+msgstr "Selecciona tus preferencias y te mostraremos recomendaciones."
+
+#: polls/views.py:17
+msgid "Underweight"
+msgstr "Bajo peso"
+
+#: polls/views.py:19
+msgid "Healthy weight"
+msgstr "Peso saludable"
+
+#: polls/views.py:21
+msgid "Overweight"
+msgstr "Sobrepeso"
+
+#: polls/views.py:23
+msgid "Obesity type I"
+msgstr "Obesidad tipo I"
+
+#: polls/views.py:25
+msgid "Obesity type II"
+msgstr "Obesidad tipo II"
+
+#: polls/views.py:26
+msgid "Obesity type III"
+msgstr "Obesidad tipo III"

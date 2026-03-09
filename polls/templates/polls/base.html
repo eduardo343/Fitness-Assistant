@@ -1,0 +1,130 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Fitness Assistant{% endblock %}</title>
+    <style>
+        :root {
+            --bg-1: #f3f6f8;
+            --bg-2: #dbe7ed;
+            --surface: #ffffff;
+            --text: #12222f;
+            --muted: #547287;
+            --accent: #0d9a8b;
+            --accent-2: #076d63;
+            --border: #c7d5de;
+            --shadow: 0 10px 24px rgba(18, 34, 47, 0.08);
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+            background: radial-gradient(circle at 20% 10%, var(--bg-2), var(--bg-1) 52%);
+            color: var(--text);
+        }
+        .wrap {
+            max-width: 980px;
+            margin: 40px auto;
+            padding: 0 18px 40px;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+        a {
+            color: var(--accent-2);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+        .muted {
+            color: var(--muted);
+        }
+        .pill {
+            display: inline-block;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 4px 10px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            background: #f6fafc;
+        }
+        .btn {
+            border: none;
+            border-radius: 10px;
+            background: var(--accent);
+            color: #fff;
+            padding: 11px 16px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: var(--accent-2);
+        }
+        .grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+        .field {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 14px;
+            gap: 6px;
+        }
+        label {
+            font-size: 14px;
+            color: var(--muted);
+        }
+        select, input[type="number"] {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 14px;
+            background: #fff;
+        }
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .hero {
+            margin-bottom: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 14px;">
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <label for="language-select" class="muted">{% trans "Language" %}</label>
+                <select id="language-select" name="language" onchange="this.form.submit()">
+                    {% get_available_languages as LANGUAGES %}
+                    {% for code, name in LANGUAGES %}
+                        <option value="{{ code }}" {% if code == LANGUAGE_CODE %}selected{% endif %}>
+                            {{ name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

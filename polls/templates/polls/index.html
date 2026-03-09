@@ -1,0 +1,84 @@
+{% extends "polls/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Exercise recommender" %}{% endblock %}
+
+{% block content %}
+<div class="hero card">
+    <h1>{% trans "Exercise recommender" %}</h1>
+    <p class="muted">
+        {% trans "Filter routines for home or gym based on your goal, level, and available time." %}
+    </p>
+    <p><a href="{% url 'polls:bmi_calculator' %}">{% trans "Go to BMI calculator" %}</a></p>
+    <form method="get">
+        <div class="grid">
+            <div class="field">
+                {{ form.place.label_tag }}
+                {{ form.place }}
+            </div>
+            <div class="field">
+                {{ form.goal.label_tag }}
+                {{ form.goal }}
+            </div>
+            <div class="field">
+                {{ form.level.label_tag }}
+                {{ form.level }}
+            </div>
+            <div class="field">
+                {{ form.max_duration.label_tag }}
+                {{ form.max_duration }}
+            </div>
+        </div>
+        <label class="checkbox">
+            {{ form.without_equipment }}
+            {{ form.without_equipment.label }}
+        </label>
+        <p style="margin-top: 14px; margin-bottom: 0;">
+            <button class="btn" type="submit">{% trans "Search recommendations" %}</button>
+        </p>
+    </form>
+</div>
+
+{% if recommendations %}
+    <h2>{% trans "Suggested exercises" %}</h2>
+    <div class="grid">
+        {% for exercise in recommendations %}
+            <article class="card">
+                <h3>
+                    <a href="{% url 'polls:exercise_detail' exercise.id %}">
+                        {{ exercise.name }}
+                    </a>
+                </h3>
+                <p class="muted">{{ exercise.description|truncatechars:130 }}</p>
+                <div>
+                    <span class="pill">{{ exercise.get_place_display }}</span>
+                    <span class="pill">{{ exercise.get_goal_display }}</span>
+                    <span class="pill">{{ exercise.get_level_display }}</span>
+                </div>
+                <p><strong>{% trans "Duration" %}:</strong> {{ exercise.duration_minutes }} min</p>
+                <p><strong>{% trans "Focus" %}:</strong> {{ exercise.focus_area }}</p>
+                {% if exercise.requires_equipment %}
+                    <p class="muted">
+                        <strong>{% trans "Equipment" %}:</strong>
+                        {% if exercise.equipment_notes %}{{ exercise.equipment_notes }}{% else %}{% trans "Required" %}{% endif %}
+                    </p>
+                {% else %}
+                    <p class="muted">{% trans "No equipment needed" %}</p>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+{% elif has_filters %}
+    <div class="card">
+        <h2>{% trans "No results" %}</h2>
+        <p class="muted">
+            {% trans "No exercises were found with those filters. Try adjusting level, goal, or max duration." %}
+        </p>
+    </div>
+{% else %}
+    <div class="card">
+        <h2>{% trans "Start with a filter" %}</h2>
+        <p class="muted">{% trans "Select your preferences and we will show personalized recommendations." %}</p>
+    </div>
+{% endif %}
+{% endblock %}

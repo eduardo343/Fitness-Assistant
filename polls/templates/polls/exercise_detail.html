@@ -1,0 +1,25 @@
+{% extends "polls/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ exercise.name }}{% endblock %}
+
+{% block content %}
+<article class="card">
+    <p><a href="{% url 'polls:index' %}">{% trans "Back to recommender" %}</a></p>
+    <h1>{{ exercise.name }}</h1>
+    <p class="muted">{{ exercise.description }}</p>
+    <p><span class="pill">{{ exercise.get_place_display }}</span></p>
+    <p><span class="pill">{{ exercise.get_goal_display }}</span></p>
+    <p><span class="pill">{{ exercise.get_level_display }}</span></p>
+    <p><strong>{% trans "Focus" %}:</strong> {{ exercise.focus_area }}</p>
+    <p><strong>{% trans "Estimated duration" %}:</strong> {{ exercise.duration_minutes }} {% trans "minutes" %}</p>
+    {% if exercise.requires_equipment %}
+        <p>
+            <strong>{% trans "Suggested equipment" %}:</strong>
+            {% if exercise.equipment_notes %}{{ exercise.equipment_notes }}{% else %}{% trans "Basic training equipment" %}{% endif %}
+        </p>
+    {% else %}
+        <p><strong>{% trans "Equipment" %}:</strong> {% trans "No equipment needed." %}</p>
+    {% endif %}
+</article>
+{% endblock %}
