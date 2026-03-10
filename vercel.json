@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "python manage.py migrate --noinput && python manage.py seed_exercises && python manage.py collectstatic --noinput",
+  "functions": {
+    "api/wsgi.py": {
+      "excludeFiles": "{.git/**,.github/**,.venv/**,.mypy_cache/**,.pytest_cache/**,.ruff_cache/**,tests/**}"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/wsgi"
+    }
+  ]
+}

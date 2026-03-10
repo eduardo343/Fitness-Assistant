@@ -16,6 +16,7 @@ venv/
 # Runtime files
 data/*.log
 data/*.db
+static/
 staticfiles/
 
 # OS files
