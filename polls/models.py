@@ -20,6 +20,15 @@ class Exercise(models.Model):
         INTERMEDIATE = "INTERMEDIATE", _("Intermediate")
         ADVANCED = "ADVANCED", _("Advanced")
 
+    class Impact(models.TextChoices):
+        LOW = "LOW", _("Low impact")
+        MODERATE = "MODERATE", _("Moderate impact")
+        HIGH = "HIGH", _("High impact")
+
+    class ContentLanguage(models.TextChoices):
+        SPANISH = "es", _("Spanish")
+        ENGLISH = "en", _("English")
+
     name = models.CharField(max_length=120, unique=True)
     description = models.TextField()
     place = models.CharField(
@@ -35,6 +44,16 @@ class Exercise(models.Model):
     )
     focus_area = models.CharField(max_length=80, default="Full body")
     duration_minutes = models.PositiveSmallIntegerField(default=20)
+    impact = models.CharField(
+        max_length=8,
+        choices=Impact.choices,
+        default=Impact.MODERATE,
+    )
+    content_language = models.CharField(
+        max_length=2,
+        choices=ContentLanguage.choices,
+        default=ContentLanguage.SPANISH,
+    )
     requires_equipment = models.BooleanField(default=False)
     equipment_notes = models.CharField(max_length=140, blank=True)
     active = models.BooleanField(default=True)

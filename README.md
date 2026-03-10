@@ -2,13 +2,51 @@
 
 Aplicacion Django para recomendar ejercicios y calcular IMC.
 
+Estado actual: `demo`.
+
+Eso significa:
+
+- usa `sqlite` local y datos seed para lectura y exploracion;
+- no esta pensado todavia para persistencia multiusuario ni panel operativo real;
+- la configuracion separa `local` y `production` para evitar mezclar defaults de desarrollo con despliegue.
+
 ## Desarrollo local
 
-1. Crea o activa tu entorno virtual.
-2. Instala dependencias con `pip install -r requirements.txt`.
-3. Ejecuta `python manage.py migrate`.
-4. Carga el seed local con `python manage.py seed_exercises`.
-5. Inicia el servidor con `python manage.py runserver`.
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt -r requirements-dev.txt
+python manage.py migrate
+python manage.py seed_exercises
+python manage.py runserver
+```
+
+Luego abre `http://127.0.0.1:8000`.
+
+## Calidad y pruebas
+
+Comandos utiles para validar el proyecto localmente:
+
+```bash
+ruff check .
+ruff format --check manage.py mysite api polls
+mypy mysite polls
+python manage.py check
+python manage.py test
+```
+
+## Catalogo e idiomas
+
+- La interfaz soporta ingles y espanol.
+- Los ejercicios seed del proyecto se guardan en espanol.
+- Los ejercicios importados desde ExerciseDB se guardan en ingles.
+- Cuando la interfaz esta en espanol, el recomendador prioriza ejercicios en espanol si existen para esos filtros.
+
+Para importar mas ejercicios desde ExerciseDB:
+
+```bash
+python manage.py sync_exercisedb --limit 50 --offset 0
+```
 
 ## Despliegue en Vercel
 
@@ -18,6 +56,13 @@ El proyecto ya incluye:
 - `vercel.json` con rewrite global a la funcion Python.
 - `buildCommand` que ejecuta migraciones, seed base y `collectstatic`.
 - configuracion de produccion para `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS` y sesiones firmadas en cookies.
+
+## Configuracion por entorno
+
+- `DJANGO_ENV=local` usa `mysite/settings/local.py`.
+- `DJANGO_ENV=production` usa `mysite/settings/production.py`.
+- `mysite/settings/base.py` contiene lo comun entre ambos.
+- Si no defines `DJANGO_ENV`, el proyecto usa `local`, salvo que detecte entorno Vercel.
 
 ### Variables de entorno recomendadas
 

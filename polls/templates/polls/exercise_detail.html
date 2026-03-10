@@ -11,6 +11,7 @@
     <p><span class="pill">{{ exercise.get_place_display }}</span></p>
     <p><span class="pill">{{ exercise.get_goal_display }}</span></p>
     <p><span class="pill">{{ exercise.get_level_display }}</span></p>
+    <p><span class="pill">{{ exercise.get_impact_display }}</span></p>
     <p><strong>{% trans "Focus" %}:</strong> {{ exercise.focus_area }}</p>
     <p><strong>{% trans "Estimated duration" %}:</strong> {{ exercise.duration_minutes }} {% trans "minutes" %}</p>
     {% if exercise.requires_equipment %}

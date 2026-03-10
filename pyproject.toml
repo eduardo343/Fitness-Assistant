@@ -1,0 +1,9 @@
+[tool.ruff]
+target-version = "py313"
+extend-exclude = [
+  "polls/migrations",
+  "static",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]

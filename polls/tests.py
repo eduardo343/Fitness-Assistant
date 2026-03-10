@@ -16,6 +16,8 @@ class RecommendationViewsTests(TestCase):
             level=Exercise.Level.BEGINNER,
             focus_area="Pierna",
             duration_minutes=15,
+            impact=Exercise.Impact.LOW,
+            content_language=Exercise.ContentLanguage.SPANISH,
             requires_equipment=False,
         )
         Exercise.objects.create(
@@ -26,6 +28,8 @@ class RecommendationViewsTests(TestCase):
             level=Exercise.Level.INTERMEDIATE,
             focus_area="Pecho",
             duration_minutes=30,
+            impact=Exercise.Impact.MODERATE,
+            content_language=Exercise.ContentLanguage.SPANISH,
             requires_equipment=True,
             equipment_notes="Banco y barra",
         )
@@ -37,6 +41,44 @@ class RecommendationViewsTests(TestCase):
             level=Exercise.Level.ADVANCED,
             focus_area="Core",
             duration_minutes=10,
+            impact=Exercise.Impact.HIGH,
+            content_language=Exercise.ContentLanguage.SPANISH,
+            requires_equipment=False,
+        )
+        Exercise.objects.create(
+            name="Marcha ligera",
+            description="Cardio de bajo impacto para empezar.",
+            place=Exercise.Place.HOME,
+            goal=Exercise.Goal.LOSE_FAT,
+            level=Exercise.Level.BEGINNER,
+            focus_area="Cardio",
+            duration_minutes=12,
+            impact=Exercise.Impact.LOW,
+            content_language=Exercise.ContentLanguage.SPANISH,
+            requires_equipment=False,
+        )
+        Exercise.objects.create(
+            name="Saltos explosivos",
+            description="Cardio intenso para usuarios avanzados.",
+            place=Exercise.Place.HOME,
+            goal=Exercise.Goal.LOSE_FAT,
+            level=Exercise.Level.BEGINNER,
+            focus_area="Cardio",
+            duration_minutes=12,
+            impact=Exercise.Impact.HIGH,
+            content_language=Exercise.ContentLanguage.SPANISH,
+            requires_equipment=False,
+        )
+        Exercise.objects.create(
+            name="jump rope intervals",
+            description="Step:1 Jump at a steady pace. Step:2 Land softly.",
+            place=Exercise.Place.HOME,
+            goal=Exercise.Goal.LOSE_FAT,
+            level=Exercise.Level.BEGINNER,
+            focus_area="Cardio",
+            duration_minutes=12,
+            impact=Exercise.Impact.HIGH,
+            content_language=Exercise.ContentLanguage.ENGLISH,
             requires_equipment=False,
         )
 
@@ -44,11 +86,23 @@ class RecommendationViewsTests(TestCase):
         response = self.client.get(reverse("polls:index"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Exercise recommender")
+        self.assertContains(response, "DEMO")
 
     def test_index_translates_to_spanish_with_accept_language(self):
         response = self.client.get(reverse("polls:index"), HTTP_ACCEPT_LANGUAGE="es")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Recomendador de ejercicios")
+
+    def test_index_in_spanish_prefers_spanish_exercises(self):
+        response = self.client.get(
+            reverse("polls:index"),
+            {"goal": Exercise.Goal.LOSE_FAT, "place": "home"},
+            HTTP_ACCEPT_LANGUAGE="es",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Marcha ligera")
+        self.assertContains(response, "Saltos explosivos")
+        self.assertNotContains(response, "jump rope intervals")
 
     def test_home_without_equipment_filters_out_gym_machine(self):
         response = self.client.get(
@@ -61,7 +115,9 @@ class RecommendationViewsTests(TestCase):
         self.assertNotContains(response, "Press banca gym")
 
     def test_level_filter_allows_lower_levels(self):
-        response = self.client.get(reverse("polls:index"), {"level": Exercise.Level.INTERMEDIATE})
+        response = self.client.get(
+            reverse("polls:index"), {"level": Exercise.Level.INTERMEDIATE}
+        )
         self.assertContains(response, "Sentadilla casa")
         self.assertContains(response, "Press banca gym")
         self.assertNotContains(response, "Plancha avanzada")
@@ -75,6 +131,7 @@ class RecommendationViewsTests(TestCase):
         payload = response.json()
         self.assertEqual(payload["count"], 2)
         self.assertEqual(len(payload["results"]), 2)
+        self.assertIn("impact", payload["results"][0])
 
     def test_bmi_calculator_view_shows_result_and_goal(self):
         response = self.client.get(
@@ -85,6 +142,10 @@ class RecommendationViewsTests(TestCase):
         self.assertContains(response, "BMI:")
         self.assertContains(response, "Overweight")
         self.assertContains(response, "Lose fat")
+        self.assertEqual(
+            response.context["recommended_exercises"][0].name,
+            "Marcha ligera",
+        )
 
     def test_bmi_api_returns_expected_payload(self):
         response = self.client.get(
@@ -126,6 +187,8 @@ class ExerciseDbMappingTests(TestCase):
         self.assertEqual(mapped["name"], "inverted row bent knees")
         self.assertEqual(mapped["place"], Exercise.Place.HOME)
         self.assertEqual(mapped["goal"], Exercise.Goal.GAIN_MUSCLE)
+        self.assertEqual(mapped["impact"], Exercise.Impact.LOW)
+        self.assertEqual(mapped["content_language"], Exercise.ContentLanguage.ENGLISH)
         self.assertFalse(mapped["requires_equipment"])
 
     def test_map_exercisedb_machine_record(self):
@@ -149,4 +212,6 @@ class ExerciseDbMappingTests(TestCase):
         self.assertEqual(mapped["place"], Exercise.Place.GYM)
         self.assertEqual(mapped["goal"], Exercise.Goal.GAIN_MUSCLE)
         self.assertTrue(mapped["requires_equipment"])
+        self.assertEqual(mapped["impact"], Exercise.Impact.MODERATE)
+        self.assertEqual(mapped["content_language"], Exercise.ContentLanguage.ENGLISH)
         self.assertEqual(mapped["level"], Exercise.Level.INTERMEDIATE)

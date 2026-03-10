@@ -3,7 +3,10 @@ from urllib.error import HTTPError, URLError
 from django.core.management.base import BaseCommand, CommandError
 
 from polls.models import Exercise
-from polls.services.exercisedb import fetch_exercisedb_exercises, map_exercisedb_exercise
+from polls.services.exercisedb import (
+    fetch_exercisedb_exercises,
+    map_exercisedb_exercise,
+)
 
 
 class Command(BaseCommand):
@@ -62,7 +65,8 @@ class Command(BaseCommand):
                 (
                     "Sync ExerciseDB completado. "
                     f"Recibidos: {len(raw_exercises)} | "
-                    f"Creados: {created} | Actualizados: {updated} | Omitidos: {skipped}"
+                    f"Creados: {created} | Actualizados: {updated} | "
+                    f"Omitidos: {skipped}"
                 )
             )
         )

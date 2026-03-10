@@ -105,11 +105,48 @@
         .hero {
             margin-bottom: 18px;
         }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stage {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            background: #e7f6f3;
+            color: var(--accent-2);
+            border: 1px solid #b7ddd7;
+        }
+        @media (max-width: 720px) {
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .brand {
+                justify-content: space-between;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="wrap">
-        <div style="display: flex; justify-content: flex-end; margin-bottom: 14px;">
+        <div class="topbar">
+            <div class="brand">
+                <strong>Fitness Assistant</strong>
+                <span class="stage">{{ APP_STAGE }}</span>
+            </div>
             <form action="{% url 'set_language' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.get_full_path }}">

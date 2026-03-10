@@ -46,10 +46,16 @@ def map_exercisedb_exercise(raw_exercise):
     if not name:
         return None
 
-    equipments = [equipment.lower().strip() for equipment in raw_exercise.get("equipments", [])]
+    equipments = [
+        equipment.lower().strip() for equipment in raw_exercise.get("equipments", [])
+    ]
     body_parts = [part.lower().strip() for part in raw_exercise.get("bodyParts", [])]
-    target_muscles = [muscle.strip() for muscle in raw_exercise.get("targetMuscles", [])]
-    instructions = [instruction.strip() for instruction in raw_exercise.get("instructions", [])]
+    target_muscles = [
+        muscle.strip() for muscle in raw_exercise.get("targetMuscles", [])
+    ]
+    instructions = [
+        instruction.strip() for instruction in raw_exercise.get("instructions", [])
+    ]
 
     level = _infer_level(instructions)
     return {
@@ -60,6 +66,8 @@ def map_exercisedb_exercise(raw_exercise):
         "level": level,
         "focus_area": _build_focus_area(target_muscles, body_parts),
         "duration_minutes": _infer_duration(level),
+        "impact": _infer_impact(body_parts, instructions, level),
+        "content_language": Exercise.ContentLanguage.ENGLISH,
         "requires_equipment": _requires_equipment(equipments),
         "equipment_notes": ", ".join(raw_exercise.get("equipments", [])[:3]),
         "active": True,
@@ -72,7 +80,9 @@ def _build_description(raw_exercise, instructions):
 
     fallback = raw_exercise.get("gifUrl", "")
     if fallback:
-        return f"Ejercicio importado de ExerciseDB. Referencia visual: {fallback}"[:1000]
+        return f"Ejercicio importado de ExerciseDB. Referencia visual: {fallback}"[
+            :1000
+        ]
     return "Ejercicio importado de ExerciseDB."
 
 
@@ -99,7 +109,14 @@ def _infer_goal(body_parts, target_muscles):
         return Exercise.Goal.ENDURANCE
     if "waist" in body_parts_set:
         return Exercise.Goal.LOSE_FAT
-    if {"upper back", "lats", "pectorals", "glutes", "hamstrings", "quads"} & target_set:
+    if {
+        "upper back",
+        "lats",
+        "pectorals",
+        "glutes",
+        "hamstrings",
+        "quads",
+    } & target_set:
         return Exercise.Goal.GAIN_MUSCLE
     if {"delts", "traps", "core"} & target_set:
         return Exercise.Goal.STRENGTH
@@ -121,6 +138,27 @@ def _infer_duration(level):
     if level == Exercise.Level.INTERMEDIATE:
         return 22
     return 30
+
+
+def _infer_impact(body_parts, instructions, level):
+    instruction_text = " ".join(instructions).lower()
+    body_parts_set = set(body_parts)
+
+    if any(keyword in instruction_text for keyword in {"jump", "sprint", "burpee"}):
+        return Exercise.Impact.HIGH
+    if "cardio" in body_parts_set:
+        return (
+            Exercise.Impact.HIGH
+            if level == Exercise.Level.ADVANCED
+            else Exercise.Impact.MODERATE
+        )
+    if any(keyword in instruction_text for keyword in {"stretch", "mobility", "hold"}):
+        return Exercise.Impact.LOW
+    if level == Exercise.Level.BEGINNER:
+        return Exercise.Impact.LOW
+    if level == Exercise.Level.ADVANCED:
+        return Exercise.Impact.HIGH
+    return Exercise.Impact.MODERATE
 
 
 def _build_focus_area(target_muscles, body_parts):

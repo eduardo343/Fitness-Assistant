@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.utils.translation import get_language
 from django.utils.translation import gettext as _
 
 from .forms import BMIForm, RecommendationForm
@@ -56,14 +57,52 @@ def _calculate_bmi_result(weight_kg, height_cm):
     }
 
 
+def _recommended_impacts_for_bmi(category_code):
+    if category_code in {"OVERWEIGHT", "OBESITY_I", "OBESITY_II", "OBESITY_III"}:
+        return [
+            Exercise.Impact.LOW,
+            Exercise.Impact.MODERATE,
+            Exercise.Impact.HIGH,
+        ]
+    if category_code == "UNDERWEIGHT":
+        return [
+            Exercise.Impact.MODERATE,
+            Exercise.Impact.LOW,
+            Exercise.Impact.HIGH,
+        ]
+    return [
+        Exercise.Impact.MODERATE,
+        Exercise.Impact.LOW,
+        Exercise.Impact.HIGH,
+    ]
+
+
+def _preferred_language_code():
+    language = (get_language() or "en").lower()
+    if language.startswith("es"):
+        return Exercise.ContentLanguage.SPANISH
+    return None
+
+
+def _limit_for_preferred_language(queryset, limit):
+    preferred_language = _preferred_language_code()
+    if not preferred_language:
+        return list(queryset[:limit])
+
+    localized_results = list(
+        queryset.filter(content_language=preferred_language)[:limit]
+    )
+    if localized_results:
+        return localized_results
+    return list(queryset[:limit])
+
+
 def _get_recommendations(cleaned_data):
     queryset = Exercise.objects.filter(active=True)
 
     place = cleaned_data.get("place")
     if place == "home":
-        queryset = queryset.filter(
-            place__in=[Exercise.Place.HOME, Exercise.Place.BOTH]
-        )
+        queryset = queryset.filter(place__in=[Exercise.Place.HOME, Exercise.Place.BOTH])
     elif place == "gym":
         queryset = queryset.filter(place__in=[Exercise.Place.GYM, Exercise.Place.BOTH])
 
@@ -82,13 +121,39 @@ def _get_recommendations(cleaned_data):
     if selected_level:
         selected_rank = LEVEL_ORDER[selected_level]
         allowed_levels = [
-            level
-            for level, rank in LEVEL_ORDER.items()
-            if rank <= selected_rank
+            level for level, rank in LEVEL_ORDER.items() if rank <= selected_rank
         ]
         queryset = queryset.filter(level__in=allowed_levels)
 
-    return list(queryset[:12])
+    return _limit_for_preferred_language(queryset, limit=12)
+
+
+def _collect_exercises_by_impact(queryset, preferred_impacts, limit):
+    ranked_exercises = []
+    for impact in preferred_impacts:
+        ranked_exercises.extend(
+            list(
+                queryset.filter(impact=impact).order_by(
+                    "duration_minutes",
+                    "name",
+                )
+            )
+        )
+    return ranked_exercises[:limit]
+
+
+def _prioritize_exercises_by_impact(queryset, preferred_impacts, limit):
+    preferred_language = _preferred_language_code()
+    if preferred_language:
+        localized_results = _collect_exercises_by_impact(
+            queryset.filter(content_language=preferred_language),
+            preferred_impacts,
+            limit,
+        )
+        if localized_results:
+            return localized_results
+
+    return _collect_exercises_by_impact(queryset, preferred_impacts, limit)
 
 
 def index(request):
@@ -127,6 +192,7 @@ def recommendations_api(request):
             "place": exercise.get_place_display(),
             "goal": exercise.get_goal_display(),
             "level": exercise.get_level_display(),
+            "impact": exercise.get_impact_display(),
             "focus_area": exercise.focus_area,
             "duration_minutes": exercise.duration_minutes,
             "requires_equipment": exercise.requires_equipment,
@@ -164,11 +230,17 @@ def bmi_calculator(request):
             )
 
         # Priorizamos opciones seguras para iniciar por defecto.
-        recommended_exercises = list(
-            exercise_queryset.filter(level=Exercise.Level.BEGINNER)[:6]
+        recommended_exercises = _prioritize_exercises_by_impact(
+            exercise_queryset.filter(level=Exercise.Level.BEGINNER),
+            _recommended_impacts_for_bmi(result["category_code"]),
+            limit=6,
         )
         if not recommended_exercises:
-            recommended_exercises = list(exercise_queryset[:6])
+            recommended_exercises = _prioritize_exercises_by_impact(
+                exercise_queryset,
+                _recommended_impacts_for_bmi(result["category_code"]),
+                limit=6,
+            )
     else:
         form = BMIForm()
 
