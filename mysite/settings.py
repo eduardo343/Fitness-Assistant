@@ -42,13 +42,13 @@ ON_VERCEL = _env_bool("VERCEL") or bool(os.getenv("VERCEL_ENV"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = _env_bool("DJANGO_DEBUG", default=not ON_VERCEL)
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") or os.getenv("SECRET_KEY", "")
 if not SECRET_KEY:
     if DEBUG:
         SECRET_KEY = "django-insecure-local-dev-key"
     else:
         raise ImproperlyConfigured(
-            "Set the DJANGO_SECRET_KEY environment variable for production deployments."
+            "Set DJANGO_SECRET_KEY or SECRET_KEY for production deployments."
         )
 
 default_allowed_hosts = ["127.0.0.1", "localhost", ".vercel.app"]

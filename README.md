@@ -21,7 +21,7 @@ El proyecto ya incluye:
 
 ### Variables de entorno recomendadas
 
-- `DJANGO_SECRET_KEY`: obligatoria en produccion.
+- `DJANGO_SECRET_KEY` o `SECRET_KEY`: una de las dos es obligatoria en produccion.
 - `DJANGO_ALLOWED_HOSTS`: lista separada por comas para dominios adicionales.
 - `DJANGO_CSRF_TRUSTED_ORIGINS`: lista separada por comas para origenes extra.
 - `ENABLE_ADMIN`: deja `false` si usas la base SQLite empaquetada como solo lectura.
